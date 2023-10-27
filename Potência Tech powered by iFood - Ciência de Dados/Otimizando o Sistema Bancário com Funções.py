@@ -4,22 +4,50 @@ limite_retirada = 3
 ls = 0
 lr = 0
 
-menu = """\n
+usuario = []
+endereco = []
+
+def menu():
+    menu = """\n
 ==========MENU==========
 [d] - Depositar
 [s] - Sacar
 [e] - Extrato
+[n] - Nova Conta
 [f] - Sair
 ========================
 """
 
+def depositar(saldo, valor, extrato, /):
+    if valor > 0:
+        saldo += valor
+        extrato += f"Depósito: R$ {saldo:.2f}\n"
+        print("\n=====Deposito realizado com Sucesso=====")
+    else:
+        print("\nOperação falhou, valor invalido! Refaça operação")
+    
+    return saldo, extrato
+    
+def saque():
+    print("")
+    
+def extrato():
+    print()
+    
+def nova_conta():
+    print()
+    
+def lista_usuario():
+    print()
+    
+
 while True:
-    opcao = input(menu)
+    opcao = input(menu())
     
     if opcao == "d":
         print("\nDepositar\n")
-        deposito = float(input("Qual valor que deseja depositar? "))
-        saldo += deposito
+        valor = float(input("Qual valor que deseja depositar? "))
+        saldo += valor
         print("Seu saldo atual é de: R$", saldo)
         continue
     
@@ -54,3 +82,5 @@ while True:
     else:
         print("Opção invalida!")
         continue
+    
+    
