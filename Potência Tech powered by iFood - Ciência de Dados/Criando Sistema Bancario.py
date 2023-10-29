@@ -48,7 +48,7 @@ while True:
     
     elif opcao == "f":
         print("\nSair\n")
-        print("Obrigado por ser nosso cliente, até a proxima!\n")
+        print("\nObrigado por ser nosso cliente, até a proxima!\n")
         break
     
     else:
