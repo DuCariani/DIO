@@ -1,12 +1,4 @@
-saldo = 0
-limite_saque= 500 # corrigir
-limite_retirada = 3 # corrigir
-extrato = ""
-ls = 0
-lr = 0
-
-usuario = []
-endereco = []
+import textwrap
 
 def menu():
     menu = """\n
@@ -18,21 +10,45 @@ def menu():
 [f] - Sair
 ========================
 """
+    return input(textwrap.dedent(menu))
+
+saldo = 0
+limite_saque = 3
+limite_retirada = 500
+extrato = ""
+ls = 0
+lr = 0
+
+usuario = []
+endereco = []
+
 
 def depositar(saldo, valor, extrato, /):
     if valor > 0:
         saldo += valor
-        extrato += f"Depósito: R$ {saldo:.2f}\n"
-        print("\n===== Deposito realizado com Sucesso! =====")
+        extrato += f"Depósito:\tR$ {valor:.2f}\n"
+        print("\n=== Depósito realizado com sucesso! ===")
     else:
-        print("\nOperação falhou, valor invalido! Refaça operação")
-    
+        print("\n@@@ Operação falhou! O valor informado é inválido. @@@")
+
     return saldo, extrato
     
 def saque(*, saldo, valor, extrato, limite_saque, n_saques, limite_retirada):
-    saque_diario = n_saques > limite_saque
-    limite_saque = valor > limite_retirada
-    sem_saldo = valor > saldo
+    if n_saques > limite_saque:
+        print("\n***** Você atingiu seu limite de saques diarios *****")
+    
+    elif valor > limite_retirada:
+        print(f"\n***** Limite para retirada é de R${limite_retirada:.2f} *****")
+    
+    elif valor > saldo:
+        print(f"\n***** Indisponivel - Seu saldo é de R${saldo:.2f} *****")
+    
+    else:
+        saldo -= valor
+        n_saques += 1
+        extrato += f"Saque: R$ {saldo:.2f}\n"
+        print("\n===== Saque realizado com sucesso! =====")
+        print(f"===== Seu saldo atual é de R${saldo:.2f} =====")   
     
 def extrato():
     print()
@@ -43,16 +59,13 @@ def nova_conta():
 def lista_usuario():
     print()
     
-
 while True:
-    opcao = input(menu())
+    opcao = menu()
     
     if opcao == "d":
         print("\n=== Depositar ===\n")
         valor = float(input("Qual valor que deseja depositar? "))
         saldo, extrato = depositar(saldo, valor, extrato)
-        print(f"Seu saldo atual é de: R$ {saldo:.2f}")
-        continue
     
     elif opcao == "s":
         print("\n=== Sacar ===\n")
@@ -76,6 +89,9 @@ while True:
         print("\nExtrato\n")
         print("Seu saldo atual é de: R$", saldo)
         continue
+    
+    elif opcao == "n":
+        print()
     
     elif opcao == "f":
         print("\nSair\n")
