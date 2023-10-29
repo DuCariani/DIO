@@ -12,26 +12,28 @@ def menu():
 """
     return input(textwrap.dedent(menu))
 
-saldo = 0
-limite_saque = 3
-limite_retirada = 500
-extrato = ""
-ls = 0
-lr = 0
-
-usuario = []
-endereco = []
-
-
 def depositar(saldo, valor, extrato, /):
     if valor > 0:
         saldo += valor
         extrato += f"Depósito:\tR$ {valor:.2f}\n"
         print("\n=== Depósito realizado com sucesso! ===")
     else:
-        print("\n@@@ Operação falhou! O valor informado é inválido. @@@")
+        print("\n*** Operação falhou! O valor informado é inválido. ***")
 
     return saldo, extrato
+
+saldo = 0
+n_saques = 0
+limite_saque=3
+limite_retirada = 500
+extrato = " "
+ls = 0
+lr = 0
+LIMITE_SAQUE = 3
+
+usuario = []
+endereco = []
+
     
 def saque(*, saldo, valor, extrato, limite_saque, n_saques, limite_retirada):
     if n_saques > limite_saque:
@@ -50,7 +52,7 @@ def saque(*, saldo, valor, extrato, limite_saque, n_saques, limite_retirada):
         print("\n===== Saque realizado com sucesso! =====")
         print(f"===== Seu saldo atual é de R${saldo:.2f} =====")   
     
-def extrato():
+def exibir_extrato():
     print()
     
 def nova_conta():
@@ -70,20 +72,15 @@ while True:
     elif opcao == "s":
         print("\n=== Sacar ===\n")
         valor = float(input("Qual valor que deseja sacar? "))
-        if valor <= saldo and lr < limite_retirada and ls + valor <= limite_saque:
-            saldo -= valor
-            ls += valor
-            lr += 1
-            print(f"Seu saldo atual é de: R$ {saldo:.2f}")
-        else:
-            if lr >= limite_retirada:
-                print("Você atingiu o limite de saque diário!")
-            elif ls + valor > limite_saque:
-                print("Limite para saque diário é de R$", limite_saque)
-            else:
-                print("Sem saldo suficiente para realizar o saque!")
-        
-            continue
+        saldo, extrato = saque(
+                saldo=saldo,
+                valor=valor,
+                extrato=extrato,
+                limite_retirada=limite_retirada,
+                n_saques=n_saques,
+                limite_saque=LIMITE_SAQUE,
+            )        
+        continue
     
     elif opcao == "e":
         print("\nExtrato\n")
