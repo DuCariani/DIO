@@ -7,6 +7,8 @@ def menu():
 [s] - Sacar
 [e] - Extrato
 [n] - Nova Conta
+[l] - Listar Contas
+[u] - Novo Usuario
 [f] - Sair
 ========================
 """
