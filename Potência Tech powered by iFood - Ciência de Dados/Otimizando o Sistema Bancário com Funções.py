@@ -52,14 +52,52 @@ def saque(*, saldo, valor, extrato, limite_saque, n_saques, limite_retirada):
         print("\n===== Saque realizado com sucesso! =====")
         print(f"===== Seu saldo atual é de R${saldo:.2f} =====")   
     
-def exibir_extrato():
-    print()
+def exibir_extrato(saldo, /, *, extrato):
+    print("\n========== EXTRATO ==========")
+    print("Não há movimentações em sua conta" if not extrato else extrato)
+    print(f"\nSaldo:\t\t {saldo:.2f}")
+    print("===============================")
     
-def nova_conta():
-    print()
+def nova_conta(agencia, n_conta, usuario):
+    cpf = input("Informe o número de CPF: ")
+    usuario = listar_usuario(cpf, usuario)
     
-def lista_usuario():
-    print()
+    if usuario:
+        print("\n=== Concluído! ===")
+        return {"agencia": agencia, "n_conta": n_conta, "usuario": usuario}
+    
+    print("\n*** Não foi localizado o usuario! ***")
+    
+def novo_usuario(usuario):
+    cpf = input("Informe o CPF (apenas numeros): ")
+    usuario = filtrar_usuario(cpf, usuario)
+    
+    if usuario:
+        print("\n*** CPF já cadastrado! ***")
+        return
+
+    nome = input("Informe o nome completo: ")
+    nascimento = input("Informe a data de nascimento (dd-mm-aaaa): ")
+    endereco = input("Informe o endereço completo: ")
+    
+    usuario.append({"nome": nome, "nascimento": nascimento, "cpf": cpf, "endereco": endereco})
+    
+    print("=== Usuario cadastrado com Sucesso! ===")
+    
+def listar_usuario(cpf, usuarios):
+    usuario_filtrado = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
+    return usuario_filtrado[0] if usuario_filtrado else None
+    
+def listar_conta(contas):
+    for conta in contas:
+        linha = f"""\
+            Agência:\t{conta['agencia']}
+            C/C:\t\t{conta['n_conta']}
+            Titular:\t{conta['usuario']['nome']}
+        """
+        print("=" * 100)
+        print(textwrap.dedent(linha))
+    
     
 while True:
     opcao = menu()
