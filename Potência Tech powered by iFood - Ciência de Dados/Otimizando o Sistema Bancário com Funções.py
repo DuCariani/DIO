@@ -23,19 +23,6 @@ def depositar(saldo, valor, extrato, /):
         print("\n*** Operação falhou! O valor informado é inválido. ***")
 
     return saldo, extrato
-
-saldo = 0
-n_saques = 0
-limite_saque=3
-limite_retirada = 500
-extrato = " "
-ls = 0
-lr = 0
-LIMITE_SAQUE = 3
-
-usuario = []
-endereco = []
-
     
 def saque(*, saldo, valor, extrato, limite_saque, n_saques, limite_retirada):
     if n_saques > limite_saque:
@@ -100,7 +87,17 @@ def listar_conta(contas):
         print("=" * 100)
         print(textwrap.dedent(linha))
     
-    
+saldo = 0
+n_saques = 0
+limite_saque=3
+limite_retirada = 500
+extrato = " "
+ls = 0
+lr = 0
+LIMITE_SAQUE = 3
+usuario = []
+endereco = []
+
 while True:
     opcao = menu()
     
